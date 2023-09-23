@@ -61,7 +61,8 @@ float Tank_A;
 float Tank_B; 
 
 // Initilize for 2 Channel 5V Relay Module to control 2(12V peristatic Pumps) 
-const float TdsDesired = 20; // Stop adjusting when within this of `TdsDesired`..
+const float LowerThershold = 50; // adjust to your desired lowest TDS value  
+const float HigherThershold = 100; //adjust to your desired heighest TDS value  
 
 
 
@@ -217,11 +218,14 @@ void OFF_FertilizerPumps() {
 
 }
 
-void PumpsControl(){    
-  if (TDS < TdsDesired) {
+void PumpsControl(){ 
+
+TDS = (TdsSensor1+TdsSensor2)/2;
+
+  if (TDS < LowerThershold) {
     ON_FertilizerPumps();     // On the Fertilizer Pumps
        } 
-    else if(TDS > TdsDesired) {
+    else if(TDS > HigherThershold) {
        OFF_FertilizerPumps();   // Off the Fertilizer Pumps
        }
 }
